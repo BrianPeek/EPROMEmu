@@ -1,0 +1,4 @@
+Reference, Quantity, Value, Footprint, Datasheet
+J1 ,1,"EPROM Connector","Connector_PinHeader_2.54mm:PinHeader_2x16_P2.54mm_Vertical","~"
+U1 ,1,"Teensy4.1","teensy:Teensy41",""
+U2 U3 U4 U5 ,4,"TXS0108EPW","Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm","www.ti.com/lit/ds/symlink/txs0108e.pdf"
