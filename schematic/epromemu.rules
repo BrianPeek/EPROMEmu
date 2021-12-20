@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 6)
+    (start_pass_no 10)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -69,7 +69,8 @@
     "A7_5V" "A12_5V" "A15_5V" "A16_5V" "A1_3V3" "A16_3V3" "A17_3V3" "A0_3V3"
     +3V3 "D1_3V3" "D6_3V3" "A14_3V3" "A15_3V3" "A6_3V3" "A7_3V3" "D2_3V3"
     "D0_3V3" "D5_3V3" "D7_3V3" "D4_3V3" "D3_3V3" "A4_3V3" "A5_3V3" "A9_3V3"
-    "A8_3V3" "A3_3V3" "A2_3V3" "A12_3V3" "A13_3V3" "A10_3V3" "A11_3V3"
+    "A8_3V3" "A3_3V3" "A2_3V3" "A12_3V3" "A13_3V3" "A10_3V3" "A11_3V3" "PGM_5V"
+    "OE_5V" "CE_5V" "PGM_3V3" "CE_3V3"
     (clearance_class "kicad_default")
     (via_rule kicad_default)
     (rule
