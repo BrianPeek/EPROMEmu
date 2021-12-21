@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 10)
+    (start_pass_no 20)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -63,7 +63,7 @@
     )
   )
   (class "kicad_default"
-    +5V "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V" GND
+    GND +5V "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V"
     "A10_5V" "D7_5V" "D6_5V" "D5_5V" "D4_5V" "D3_5V" "D2_5V" "D1_5V"
     "D0_5V" "A0_5V" "A1_5V" "A2_5V" "A3_5V" "A4_5V" "A5_5V" "A6_5V"
     "A7_5V" "A12_5V" "A15_5V" "A16_5V" "A1_3V3" "A16_3V3" "A17_3V3" "A0_3V3"
