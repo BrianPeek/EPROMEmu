@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 6141)
+    (start_pass_no 14898)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -31,6 +31,15 @@
     (clear 125.0 (type smd_to_turn_gap))
     (clear 50.0 (type smd_smd))
   )
+  (padstack "Via[0-1]_685.8:330.2_um"
+    (shape
+      (circle F.Cu 685.8 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 685.8 0.0 0.0)
+    )
+    (attach off)
+  )
   (padstack "Via[0-1]_800:400_um"
     (shape
       (circle F.Cu 800.0 0.0 0.0)
@@ -39,6 +48,12 @@
       (circle B.Cu 800.0 0.0 0.0)
     )
     (attach off)
+  )
+  (via 
+    "Via[0-1]_685.8:330.2_um" "Via[0-1]_685.8:330.2_um" default
+  )
+  (via 
+    "Via[0-1]_685.8:330.2_um-kicad_default" "Via[0-1]_685.8:330.2_um" "kicad_default"
   )
   (via 
     "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
@@ -63,7 +78,7 @@
     )
   )
   (class "kicad_default"
-    GND +5V "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V"
+    +5V "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V" GND
     "A10_5V" "D7_5V" "D6_5V" "D5_5V" "D4_5V" "D3_5V" "D2_5V" "D1_5V"
     "D0_5V" "A0_5V" "A1_5V" "A2_5V" "A3_5V" "A4_5V" "A5_5V" "A6_5V"
     "A7_5V" "A12_5V" "A15_5V" "A16_5V" "A1_3V3" "A16_3V3" "A17_3V3" "A0_3V3"
