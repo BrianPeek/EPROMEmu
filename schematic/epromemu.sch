@@ -376,8 +376,6 @@ $EndComp
 Wire Wire Line
 	9050 3250 8950 3250
 Connection ~ 8950 3250
-Wire Wire Line
-	8950 3250 8800 3250
 $Comp
 L power:+3.3V #PWR0116
 U 1 1 61C5BDCA
@@ -484,30 +482,6 @@ F 3 "~" H 8950 3350 50  0001 C CNN
 	1    8950 3350
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	7350 2350 7200 2350
-Wire Wire Line
-	7200 2350 7200 3000
-Wire Wire Line
-	8800 1150 7850 1150
-Wire Wire Line
-	8950 1150 8800 1150
-Connection ~ 8800 1150
-Wire Wire Line
-	7200 3000 8800 3000
-Wire Wire Line
-	8800 3000 8800 1150
-Wire Wire Line
-	7350 4450 7200 4450
-Wire Wire Line
-	7200 4450 7200 5100
-Wire Wire Line
-	7200 5100 8800 5100
-Wire Wire Line
-	8800 5100 8800 3250
-Connection ~ 8800 3250
-Wire Wire Line
-	8800 3250 7850 3250
 Wire Wire Line
 	1650 3250 1850 3250
 NoConn ~ 2300 4050
@@ -681,4 +655,14 @@ F 3 "" H 1450 3250 50  0001 C CNN
 	1    1450 3250
 	0    -1   -1   0   
 $EndComp
+Wire Wire Line
+	7850 1150 8950 1150
+Wire Wire Line
+	7350 2350 7350 2450
+Connection ~ 7350 2450
+Wire Wire Line
+	7850 3250 8950 3250
+Wire Wire Line
+	7350 4450 7350 4550
+Connection ~ 7350 4550
 $EndSCHEMATC
