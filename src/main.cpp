@@ -1,11 +1,12 @@
 #include <Arduino.h>
 
-// forced to a 1mbit eprom
-char buffer[128*1024];
-int addrPins[] = { 24,25,22,23,20,21,38,39,26,27,19,18,14,15,40,41,17,16 };
-int dataPins[] = { 10,12,11,13,6,9,32,8 };
+// forced to a 2mbit eprom
+char buffer[256*1024];
+int addrPins[] = { 19,18,14,15,40,41,17,16,22,23,20,21,38,39,26,27,24,25 };
+int dataPins[] = { 10,12,11,13,8,7,36,37,26,25 };
 
-int oePin = 33;
+int cePin = 34;
+int pgmPin = 33;
 
 void readFile()
 {
@@ -39,8 +40,6 @@ void setup()
 	for(int i = 0; i < 8; i++)
 		pinMode(dataPins[i], OUTPUT);
 
-	pinMode(oePin, INPUT);
-
 	Serial.begin(115200);
     while (!Serial.available());
 	readFile();
@@ -54,26 +53,21 @@ void loop()
 		Serial.printf("%d", x);
 	}
 	Serial.printf("\r\n");
-	if(digitalReadFast(oePin))
-	{
-		GPIO7_DR = 0xFF;
-	}
-	else	
-	{
-		uint32_t io6 = GPIO6_DR;
 
-		uint16_t addr = ((io6 >> 12 & 0x03) |
-						(io6 >> 14 & 0xFFFC));
+	// read address pins
+	uint32_t io6 = GPIO6_DR;
 
-		Serial.printf("Addr: %08X\r\n", addr);
+	uint32_t addr = (((io6 >> 16) & 0xFFFF) |
+					((io6 & 0x0300) << 4));
+	Serial.printf("Addr: %08X\r\n", addr);
 
-		char b = buffer[addr];
-		Serial.printf("%02X\r\n", b);
-		// set data pins
-		uint32_t outb = (((b & 0x0F) << 0) |
-							((b & 0x70) << 5) |
-							((b & 0x80) << 8));
-		Serial.printf("Data: %08X\r\n", outb);
-		GPIO7_DR = outb;
-	}
+	// get byte
+	char b = buffer[addr];
+	Serial.printf("%02X\r\n", b);
+
+	// set data pins
+	uint32_t outb = ((b & 0x0F) << 0) |	
+					((b & 0xF0) << 16);
+	Serial.printf("Data: %08X\r\n", outb);
+	GPIO7_DR = outb;
 }
