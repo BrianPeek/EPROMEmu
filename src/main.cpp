@@ -1,18 +1,21 @@
 #include <Arduino.h>
 
 // forced to a 2mbit eprom
-//char buffer[256*1024];
-extern char buffer[69600];
-int addrPins[] = { 19,18,14,15,40,41,17,16,22,23,20,21,38,39,26,27,24,25 };
-int dataPins[] = { 10,12,11,13,8,7,36,37 };
+#define ROM_BUFFER_LEN (256*1024)
+char buffer[ROM_BUFFER_LEN];
 
-int cePin = 34;
-int pgmPin = 33;
+int32_t inPins[] = { 19,18,14,15,40,41,17,16,22,23,20,21,38,39,26,27,24,25,34,35,30,31,-1 };
+int32_t outPins[] = { 10,12,11,13,8,7,36,37,-1 };
+
+int32_t cePin = 30;
+int32_t pgmPin = 31;
 
 void readFile()
 {
-	#define BUFFLEN 1024
-	char buff[BUFFLEN];
+	const int length = 1024;
+	char buff[length];
+
+	memset(buffer, 0, ROM_BUFFER_LEN);
 
 	size_t read = 0;
 	size_t total = 0;
@@ -20,7 +23,8 @@ void readFile()
 
 	do
 	{
-		read = Serial.readBytes(buff, BUFFLEN);
+		memset(buff, 0, length);
+		read = Serial.readBytes(buff, length);
 		total += read;
 		if(read > 0)
 		{
@@ -29,21 +33,21 @@ void readFile()
 		}
 	}
 	while(read != 0);
+}
 
-	Serial.printf("Total read: %d\r\n", total);
+void setPinMode(int32_t* pins, int32_t direction)
+{
+	for(int i = 0; pins[i] != -1; i++)
+		pinMode(pins[i], direction);
 }
 
 void setup()
 {
-	for(int i = 0; i < 18; i++)
-		pinMode(addrPins[i], INPUT);
+	setPinMode(inPins, INPUT);
+	setPinMode(outPins, OUTPUT);
+	GPIO7_DR = 0;
 
-	for(int i = 0; i < 8; i++)
-		pinMode(dataPins[i], OUTPUT);
-
-	//Serial.begin(115200);
-    //while (!Serial.available());
-	//readFile();
+	Serial.begin(115200);
 }
 
 void loop()
@@ -52,14 +56,18 @@ void loop()
 	uint32_t io6 = GPIO6_DR;
 
 	uint32_t addr = (((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4));
-	 //Serial.printf("Addr: %08X\r\n", addr);
 
-	// // get byte
+	// get byte
 	char b = buffer[addr];
-	// Serial.printf("%02X\r\n", b);
 
 	// set data pins
-	uint32_t outb = ((b & 0x0F) << 0) |	((b & 0xF0) << 12);
-	//Serial.printf("Data: %08X\r\n", outb);
+	uint32_t outb = 0;
+	uint8_t ce = digitalReadFast(cePin);
+	if(!ce)
+ 		outb = ((b & 0x0F) << 0) | ((b & 0xF0) << 12);
+
 	GPIO7_DR = outb;
+
+	if(Serial.available())
+		readFile();
 }

@@ -367,7 +367,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "test.net",
-      "specctra_dsn": "",
+      "specctra_dsn": "epromemu.dsn",
       "step": "",
       "vrml": ""
     },
