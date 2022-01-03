@@ -33,6 +33,10 @@ void readFile()
 		}
 	}
 	while(read != 0);
+
+	// on GG (and lynx?) top address bit gets stuck high (?) so mirror to upper region too?
+	if(total == 131072)
+		memcpy(p, buffer, 131072);
 }
 
 void setPinMode(int32_t* pins, int32_t direction)
@@ -52,19 +56,21 @@ void setup()
 
 void loop()
 {
-	// read address pins
 	uint32_t io6 = GPIO6_DR;
-
-	uint32_t addr = (((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4));
-
-	// get byte
-	char b = buffer[addr];
-
-	// set data pins
 	uint32_t outb = 0;
 	uint8_t ce = digitalReadFast(cePin);
+
 	if(!ce)
- 		outb = ((b & 0x0F) << 0) | ((b & 0xF0) << 12);
+	{
+		// read address pins
+		uint32_t addr = (((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4));
+
+		// get byte at addr
+		char b = buffer[addr];
+
+		// set data pins
+		outb = ((b & 0x0F) << 0) | ((b & 0xF0) << 12);
+	}
 
 	GPIO7_DR = outb;
 
