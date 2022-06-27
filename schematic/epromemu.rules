@@ -5,20 +5,20 @@
   )
   (autoroute_settings
     (fanout off)
-    (eu.mihosoft.freerouting.autoroute on)
+    (autoroute on)
     (postroute on)
     (vias on)
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 23085)
-    (layer_rule F.Cu
+    (start_pass_no 36017)
+    (layer_rule "F.Cu"
       (active on)
       (preferred_direction horizontal)
       (preferred_direction_trace_costs 1.0)
       (against_preferred_direction_trace_costs 2.7)
     )
-    (layer_rule B.Cu
+    (layer_rule "B.Cu"
       (active on)
       (preferred_direction vertical)
       (preferred_direction_trace_costs 1.0)
@@ -29,50 +29,50 @@
     (width 250.0)
     (clear 200.2)
     (clear 125.0 (type smd_to_turn_gap))
-    (clear 50.0 (type smd_smd))
   )
   (padstack "Via[0-1]_685.8:330.2_um"
     (shape
-      (circle F.Cu 685.8 0.0 0.0)
+      (circle "F.Cu" 685.8 0.0 0.0)
     )
     (shape
-      (circle B.Cu 685.8 0.0 0.0)
+      (circle "B.Cu" 685.8 0.0 0.0)
     )
     (attach off)
   )
   (padstack "Via[0-1]_800:400_um"
     (shape
-      (circle F.Cu 800.0 0.0 0.0)
+      (circle "F.Cu" 800.0 0.0 0.0)
     )
     (shape
-      (circle B.Cu 800.0 0.0 0.0)
+      (circle "B.Cu" 800.0 0.0 0.0)
     )
     (attach off)
   )
   (via 
-    "Via[0-1]_685.8:330.2_um" "Via[0-1]_685.8:330.2_um" default
+    "Via[0-1]_685.8:330.2_um" "Via[0-1]_685.8:330.2_um" "default"
   )
   (via 
     "Via[0-1]_685.8:330.2_um-kicad_default" "Via[0-1]_685.8:330.2_um" "kicad_default"
   )
   (via 
-    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" "default"
   )
   (via 
     "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
   )
   (via_rule
-    default "Via[0-1]_800:400_um"
+    "default" "Via[0-1]_800:400_um"
   )
   (via_rule
     "kicad_default" "Via[0-1]_800:400_um-kicad_default"
   )
-  (class default
-    "unconnected-(U1-Pad21)" "unconnected-(U1-Pad25)" "unconnected-(U1-Pad26)" "unconnected-(U1-Pad24)" "unconnected-(U1-Pad27)" "unconnected-(U1-Pad34)" "unconnected-(U1-Pad11)" "unconnected-(U1-Pad8)"
-    "unconnected-(U1-Pad7)" "unconnected-(U1-Pad6)" "unconnected-(U1-Pad5)" "unconnected-(U1-Pad4)" "unconnected-(U1-Pad3)" "unconnected-(U1-Pad2)" "unconnected-(U1-Pad46)" "unconnected-(U1-Pad47)"
-    "unconnected-(U1-Pad48)" "OE_3V3" "unconnected-(U3-Pad12)" "unconnected-(U3-Pad13)" "unconnected-(U3-Pad14)" "unconnected-(U3-Pad6)" "unconnected-(U3-Pad7)" "unconnected-(U3-Pad8)"
-    (clearance_class default)
-    (via_rule default)
+  (class "default"
+    "unconnected-(U1-Pad25)" "unconnected-(U1-Pad26)" "unconnected-(U1-Pad24)" "unconnected-(U1-Pad27)" "unconnected-(U1-Pad34)" "unconnected-(U1-Pad11)" "unconnected-(U1-Pad8)" "unconnected-(U1-Pad7)"
+    "unconnected-(U1-Pad6)" "unconnected-(U1-Pad5)" "unconnected-(U1-Pad4)" "unconnected-(U1-Pad3)" "unconnected-(U1-Pad2)" "unconnected-(U1-Pad46)" "unconnected-(U1-Pad47)" "unconnected-(U1-Pad48)"
+    "unconnected-(U3-Pad8)" "unconnected-(U3-Pad13)" "A18_5V" "A18_3V3" "unconnected-(U3-Pad7)" "unconnected-(U5-Pad8)" "unconnected-(U5-Pad9)" "unconnected-(U5-Pad11)"
+    "unconnected-(U5-Pad12)" "unconnected-(U1-Pad21)" "unconnected-(U1-Pad22)" "unconnected-(U1-Pad23)" "unconnected-(U3-Pad9)" "unconnected-(U3-Pad11)" "unconnected-(U3-Pad12)" "Net-(U2-Pad19)"
+    (clearance_class "default")
+    (via_rule "default")
     (rule
       (width 250.0)
     )
@@ -81,16 +81,16 @@
     )
   )
   (class "kicad_default"
-    +5V "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V" GND
+    "+5V" "A17_5V" "A14_5V" "A13_5V" "A8_5V" "A9_5V" "A11_5V" "GND"
     "A10_5V" "D7_5V" "D6_5V" "D5_5V" "D4_5V" "D3_5V" "D2_5V" "D1_5V"
     "D0_5V" "A0_5V" "A1_5V" "A2_5V" "A3_5V" "A4_5V" "A5_5V" "A6_5V"
     "A7_5V" "A12_5V" "A15_5V" "A16_5V" "A1_3V3" "A16_3V3" "A17_3V3" "A0_3V3"
-    +3V3 "D1_3V3" "D6_3V3" "A14_3V3" "A15_3V3" "A6_3V3" "A7_3V3" "D2_3V3"
+    "+3V3" "D1_3V3" "D6_3V3" "A14_3V3" "A15_3V3" "A6_3V3" "A7_3V3" "D2_3V3"
     "D0_3V3" "D5_3V3" "D7_3V3" "D4_3V3" "D3_3V3" "A4_3V3" "A5_3V3" "A9_3V3"
-    "A8_3V3" "A3_3V3" "A2_3V3" "A12_3V3" "A13_3V3" "A10_3V3" "A11_3V3" "PGM_5V"
-    "OE_5V" "CE_5V" "PGM_3V3" "CE_3V3"
+    "A8_3V3" "A3_3V3" "A2_3V3" "A12_3V3" "A13_3V3" "A10_3V3" "A11_3V3" "OE_5V"
+    "CE_5V"
     (clearance_class "kicad_default")
-    (via_rule kicad_default)
+    (via_rule "kicad_default")
     (rule
       (width 250.0)
     )
