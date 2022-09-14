@@ -4,7 +4,7 @@
 
 I've decided to make this public in the rare event it might help someone.
 
-This is a very simple, likely very wrong (EP)ROM emulator using a Teensy 4.1 and the Arduino platform.  It works for my purposes (emulating an EPROM for
+This is a very simple, likely very wrong (EP)ROM emulator using a Teensy 4.1 and Arduino/PlatformIO.  It works for my purposes (emulating an EPROM for
 use in an Atari Lynx EPROM cartridge), but it it is probably not the "correct" way to design hardware.  I have also used it on a Game Gear EPROM cartridge,
 but it was not heavily tested.
 
