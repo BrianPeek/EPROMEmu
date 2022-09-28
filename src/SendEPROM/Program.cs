@@ -1,34 +1,39 @@
 ﻿using System.IO.Ports;
-using System.Configuration;
+using System.CommandLine;
 
 namespace SendEPROM
 {
 	public class Program
     {
-        public static int Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
-            if(args.Length != 3 && args.Length != 2)
-                return Usage();
+            var rootCmd = new RootCommand("Send a binary image to the EPROM emulator");
 
-            string port = ConfigurationManager.AppSettings["port"];
-			int baud = int.Parse(ConfigurationManager.AppSettings["baud"]);
-            string file = string.Empty;
-            byte mode = 0;
+            var portOption = new Option<string>      (new string[] {"--port", "-p" }, description: "COM port on which to send the file",  getDefaultValue: () => "COM3");
+            var baudOption = new Option<int>         (new string[] {"--baud", "-b" }, description: "Baud rate at which to send",          getDefaultValue: () => 115200);
+            var modeOption = new Option<byte>        (new string[] {"--mode", "-m" }, description: "EPROM mode (1 = 27C256, 2 = 27C020)", getDefaultValue: () => 2);
 
-            if(args.Length == 2)
+            var fileArgument = new Argument<FileInfo>("file", description: "File to send");
+
+            rootCmd.AddOption(portOption);
+            rootCmd.AddOption(baudOption);
+            rootCmd.AddOption(modeOption);
+            rootCmd.AddArgument(fileArgument);
+
+            rootCmd.SetHandler((port, baud, mode, file) =>
             {
-                mode = byte.Parse(args[0]);
-                file = args[1];
-            }
-            else if(args.Length == 3)
-            {
-                port = args[0];
-                baud = int.Parse(args[1]);
-                file = args[2];
-            }
+                SendData(port, baud, mode, file);
+            },
+            portOption, baudOption, modeOption, fileArgument);
 
-			Console.WriteLine($"Reading {file}");
-			byte[] buff = File.ReadAllBytes(file);
+            return await rootCmd.InvokeAsync(args);
+        }
+
+        static void SendData(string port, int baud, byte mode, FileInfo file)
+        {
+
+			Console.WriteLine($"Reading {file.Name}");
+			byte[] buff = File.ReadAllBytes(file.Name);
 
             Console.WriteLine($"Opening {port} at {baud}");
 			var sp = new SerialPort(port)
@@ -48,14 +53,6 @@ namespace SendEPROM
             sp.Write(buff, 0, buff.Length);
             sp.Close();
             Console.WriteLine("Done!");
-
-            return 0;
-        }
-
-        private static int Usage()
-        {
-            Console.WriteLine("Usage: SendEPROM [COMX] [baud] [EPROM mode] filename");
-            return -1;
         }
     }
 }

@@ -96,17 +96,15 @@ void loop()
 
 	switch(mode)
 	{
-		// 32Kbit, 8KB, 0x0000-0x7FFF
+		// 256Kbit, 32KB, 0x0000-0x7FFF
 		case m27C256:
 			addr = ((io6 >> 16) & 0x7FFF);
 			break;
 
 		// 2Mbit, 256KB, 0x00000-0x3FFFF
 		case m27C020:
-			addr = ((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4);
-			break;
-
 		default:
+			addr = ((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4);
 			break;
 	}
 
