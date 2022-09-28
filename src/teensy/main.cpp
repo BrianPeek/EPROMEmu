@@ -10,7 +10,6 @@ enum eMode : unsigned char
 {
 	m27C256 = 1,
 	m27C020 = 2,
-	mUnknown = 0xFF
 };
 
 #define ROM_BUFFER_LEN (256*1024)
