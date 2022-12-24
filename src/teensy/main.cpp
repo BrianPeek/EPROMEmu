@@ -49,10 +49,6 @@ void readData(Stream* s)
 	}
 	while(read != 0);
 
-	// on GG (and lynx?) top address bit gets stuck high (?) so mirror to upper region too?
-	if(total == 131072)
-		memcpy(p, buffer, 131072);
-
 	SD.remove(filename);
 
 	File f = SD.open(filename, O_WRITE);
