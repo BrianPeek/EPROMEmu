@@ -2,24 +2,33 @@
 #include <SPI.h>
 #include <SD.h>
 
-// forced to a 2mbit eprom
 // FLASHMEM
 // DMAMEM
 // PROGMEM
 
+enum eMode : unsigned char
+{
+	m27C256 = 1,
+	m27C020 = 2,
+};
+
 #define ROM_BUFFER_LEN (256*1024)
 char buffer[ROM_BUFFER_LEN];
 const char *filename = "rom.bin";
+eMode mode = m27C020;
+Stream* stream;
 
 int32_t inPins[] = { 19,18,14,15,40,41,17,16,22,23,20,21,38,39,26,27,24,25,-1 };
 int32_t outPins[] = { 10,12,11,13,8,7,36,37,-1 };
 
-void readFile(int port)
+void readData(Stream* s)
 {
 	const int length = 1024;
 	char buff[length];
 
-	memset(buffer, 0, ROM_BUFFER_LEN);
+	mode = (eMode)s->read();
+
+	memset(buffer, 0xFF, ROM_BUFFER_LEN);
 
 	size_t read = 0;
 	size_t total = 0;
@@ -29,15 +38,7 @@ void readFile(int port)
 	{
 		memset(buff, 0, length);
 
-		switch(port)
-		{
-			case 0:
-				read = Serial.readBytes(buff, length);
-				break;
-			case 1:
-				read = Serial1.readBytes(buff, length);
-				break;		
-		}
+		read = s->readBytes(buff, length);
 
 		total += read;
 		if(read > 0)
@@ -47,10 +48,6 @@ void readFile(int port)
 		}
 	}
 	while(read != 0);
-
-	// on GG (and lynx?) top address bit gets stuck high (?) so mirror to upper region too?
-	if(total == 131072)
-		memcpy(p, buffer, 131072);
 
 	SD.remove(filename);
 
@@ -90,7 +87,21 @@ void loop()
 	uint32_t outb = 0;
 
 	// read address pins
-	uint32_t addr = ((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4);
+	uint32_t addr = 0;
+
+	switch(mode)
+	{
+		// 256Kbit, 32KB, 0x0000-0x7FFF
+		case m27C256:
+			addr = ((io6 >> 16) & 0x7FFF);
+			break;
+
+		// 2Mbit, 256KB, 0x00000-0x3FFFF
+		case m27C020:
+		default:
+			addr = ((io6 >> 16) & 0xFFFF) | ((io6 & 0x3000) << 4);
+			break;
+	}
 
 	// get byte at addr
 	char b = buffer[addr];
@@ -101,8 +112,8 @@ void loop()
 
 	// read file from either serial port, if available
 	if(Serial.available())
-		readFile(0);
+		readData(&Serial);
 
 	if(Serial1.available())
-		readFile(1);
+		readData(&Serial1);
 }
