@@ -12,7 +12,7 @@ namespace SendEPROM
         {
             var portOption = new Option<string>(new string[] {"--port", "-p" }, description: "COM port on which to send the file",  getDefaultValue: () => "COM3");
             var baudOption = new Option<int>   (new string[] {"--baud", "-b" }, description: "Baud rate at which to send",          getDefaultValue: () => 115200);
-            var modeOption = new Option<byte>  (new string[] {"--mode", "-m" }, description: "EPROM mode (1 = 27C256, 2 = 27C020)", getDefaultValue: () => 2);
+            var modeOption = new Option<byte>  (new string[] {"--mode", "-m" }, description: "EPROM mode (1 = 27C256, 2 = 27C010, 3 = 27C020)", getDefaultValue: () => 3);
             var skipOption = new Option<int>   (new string[] {"--skip", "-s" }, description: "Skip N bytes at start of file",       getDefaultValue: () => 0);
 
             var fileArgument = new Argument<FileInfo>("file", description: "File to send");

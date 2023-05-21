@@ -9,7 +9,8 @@
 enum eMode : unsigned char
 {
 	m27C256 = 1,
-	m27C020 = 2,
+	m27C010 = 2,
+	m27C020 = 3,
 };
 
 #define ROM_BUFFER_LEN (256*1024)
@@ -94,6 +95,11 @@ void loop()
 		// 256Kbit, 32KB, 0x0000-0x7FFF
 		case m27C256:
 			addr = ((io6 >> 16) & 0x7FFF);
+			break;
+
+		// 1Mbit, 128KB, 0x00000-0x1FFFF
+		case m27C010:
+			addr = ((io6 >> 16) & 0xFFFF) | ((io6 & 0x1000) << 4);
 			break;
 
 		// 2Mbit, 256KB, 0x00000-0x3FFFF
