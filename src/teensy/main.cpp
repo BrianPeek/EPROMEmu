@@ -26,13 +26,13 @@ void readData(Stream* s)
 {
 	const int length = 1024;
 	char buff[length];
+	int total = 0;
 
 	mode = (eMode)s->read();
 
 	memset(buffer, 0xFF, ROM_BUFFER_LEN);
 
 	size_t read = 0;
-	size_t total = 0;
 	char* p = buffer;
 
 	do
@@ -41,11 +41,11 @@ void readData(Stream* s)
 
 		read = s->readBytes(buff, length);
 
-		total += read;
 		if(read > 0)
 		{
 			memcpy(p, buff, read);
 			p += read;
+			total += read;
 		}
 	}
 	while(read != 0);
@@ -53,7 +53,7 @@ void readData(Stream* s)
 	SD.remove(filename);
 
 	File f = SD.open(filename, O_WRITE);
-	f.write(buffer, ROM_BUFFER_LEN);
+	f.write(buffer, total);
 	f.close();
 }
 
@@ -65,6 +65,8 @@ void setPinMode(int32_t* pins, int32_t direction)
 
 void setup()
 {
+	mode = m27C256;
+
 	setPinMode(inPins, INPUT);
 	setPinMode(outPins, OUTPUT);
 	GPIO7_DR = 0;
@@ -74,8 +76,15 @@ void setup()
 	if(SD.exists(filename))
 	{
 		File f = SD.open(filename, O_READ);
-		f.read(buffer, f.size());
+		size_t size = f.size();
+		f.read(buffer, size);
 		f.close();
+
+		if(size > 32*1024)
+			mode = m27C010;
+
+		if(size > 128*1024)
+			mode = m27C020;
 	}
 
 	Serial.begin(115200);
