@@ -14,7 +14,7 @@ enum eMode : unsigned char
 };
 
 #define ROM_BUFFER_LEN (256*1024)
-char buffer[ROM_BUFFER_LEN];
+EXTMEM char buffer[ROM_BUFFER_LEN];
 const char *filename = "rom.bin";
 eMode mode = m27C020;
 Stream* stream;
@@ -132,3 +132,69 @@ void loop()
 	if(Serial1.available())
 		readData(&Serial1);
 }
+
+
+
+// addr
+// GPIO6-16 -> 19 A0
+// GPIO6-17 -> 18 A1
+// GPIO6-18 -> 14 A2
+// GPIO6-19 -> 15 A3
+// GPIO6-20 -> 40 A4
+// GPIO6-21 -> 41 A5
+// GPIO6-22 -> 17 A6
+// GPIO6-23 -> 16 A7
+// GPIO6-24 -> 22 A8
+// GPIO6-25 -> 23 A9
+// GPIO6-26 -> 20 A10
+// GPIO6-27 -> 21 A11
+// GPIO6-28 -> 38 A12
+// GPIO6-29 -> 39 A13
+// GPIO6-30 -> 26 A14
+// GPIO6-31 -> 27 A15
+// GPIO9-04 -> 02 A16
+// GPIO9-05 -> 03 A17
+// GPIO9-06 -> 04 A18
+// GPIO9-07 -> 33 A19
+
+// data
+// GPIO7-00 -> 10 D0
+// GPIO7-01 -> 12 D1
+// GPIO7-02 -> 11 D2
+// GPIO7-03 -> 13 D3
+// GPIO7-16 -> 08 D4
+// GPIO7-17 -> 07 D5
+// GPIO7-18 -> 36 D6
+// GPIO7-19 -> 37 D7
+
+// the rest
+// GPIO6-12 -> 24
+// GPIO6-13 -> 25
+// GPIO6-02 -> 01
+// GPIO6-03 -> 00
+
+// GPIO7-10 -> 06
+// GPIO7-11 -> 09
+// GPIO7-12 -> 32
+// GPIO7-28 -> 35
+// GPIO7-29 -> 34
+
+// GPIO8-12 -> 45
+// GPIO8-13 -> 44
+// GPIO8-14 -> 43
+// GPIO8-15 -> 42
+// GPIO8-16 -> 47
+// GPIO8-17 -> 46
+// GPIO8-18 -> 28
+// GPIO8-22 -> 31
+// GPIO8-23 -> 30
+
+// GPIO9-08 -> 05
+// GPIO9-22 -> 51
+// GPIO9-24 -> 48
+// GPIO9-25 -> 53
+// GPIO9-26 -> 52
+// GPIO9-27 -> 49
+// GPIO9-28 -> 50
+// GPIO9-29 -> 54
+// GPIO9-31 -> 29
