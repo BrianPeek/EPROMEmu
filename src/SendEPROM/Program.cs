@@ -48,7 +48,7 @@ namespace SendEPROM
         {
             _sw = Stopwatch.StartNew();
 
-            var portOption = new Option<string>(["--port", "-p"], description: "COM port on which to send the file", getDefaultValue: () => "COM3");
+            var portOption = new Option<string>(["--port", "-p"], description: "COM port on which to send the file", getDefaultValue: () => "COM4");
             var baudOption = new Option<int>   (["--baud", "-b"], description: "Baud rate at which to send",         getDefaultValue: () => 115200);
             var modeOption = new Option<int>   (["--type", "-t"], description: "EPROM type\n" +
                                                                                " 0 = Auto\n" +
